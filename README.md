@@ -15,88 +15,58 @@ Craft Companion 是一个基于结构化知识库的 AI 协作创作框架，专
 
 ## 快速开始
 
-### 前置要求
+> **推荐使用 Cherry Studio** — 图形界面，无需命令行，开箱即用 → [Cherry Studio 完整使用指南](docs/06-Cherry-Studio使用指南.md)
 
-在开始之前，请确保你已安装：
-
-- **Node.js** 18.0 或更高版本 → [下载](https://nodejs.org/)
-- **Claude Code** 或其他支持 CLAUDE.md 的 AI 工具
-- **Git**
-
-检查版本：
-```bash
-node --version  # 应该显示 v18.0.0 或更高
-```
-
----
-
-### 1. 安装
-
-**方式 A：通过 npm 安装（推荐）**
+### 1. 获取项目
 
 ```bash
-npm install -g craft-companion
-```
-
-安装后可直接使用：
-```bash
-craft-companion init
-# 或使用简短命令
-cc-init
-```
-
-**方式 B：从源码安装**
-
-```bash
-# 克隆仓库
 git clone https://github.com/qcx1919788736-collab/craft-companion.git
 cd craft-companion
-npm install -g .
 ```
 
 ---
 
-### 2. 创建你的第一个项目
+### 2. 安装 Cherry Studio（推荐）
 
-```bash
-# 使用 craft-companion 命令
-craft-companion init
+Cherry Studio 是一个跨平台的 AI 桌面客户端，支持多个 LLM 提供商、知识库管理和 MCP 服务器集成。
 
-# 或使用简短命令
-cc-init
-```
+**下载地址**：
+- 官网：https://cherry-ai.com
+- GitHub：https://github.com/kangfenmao/cherry-studio
 
-按提示输入项目信息：
-```
-=== Craft Companion 项目初始化 ===
-
-项目名称: 我的小说
-作者: 张三
-小说类型: 科幻
-
-✓ 项目 "我的小说" 创建成功！
-✓ 知识库结构已生成
-✓ CLAUDE.md 已配置
-
-下一步：cd 我的小说
-```
+**支持平台**：Windows / macOS / Linux
 
 ---
 
-### 3. 开始创作
+### 3. 在 Cherry Studio 中使用
 
-```bash
-# 进入项目目录
-cd 我的小说
+#### 第一种（强推！）
 
-# 用 Claude Code 打开
-claude-code .
-```
+**步骤**：
 
-在 Claude Code 中输入：
-```
-请帮我创作第1章
-```
+1. **打开 Cherry Studio**，配置你的 API（Claude / GPT / 其他）
+
+2. **创建 Agent**
+
+   - 新建 Agent，命名随意
+   - 系统提示词：（可不设置，设置工作目录后，AI会自动读取CLAUDE.md和知识库内容）
+   - 工作目录选择先前克隆的整个库，目录名默认是`craft-companion` 
+   - 设置工作目录后，AI会自动读取CLAUDE.md和知识库内容，无需额外导入文件。
+   - 权限模式熟悉后建议全自动模式
+   - 工具等cherry内置有bash Edit Glob等工具来操作文件，其余可自行设置搜索工具等
+
+3. **开始创作**
+
+   - 点击会话
+
+   - 可自由输入，自然语言交互。
+
+     （也可以用助手搭配cherry知识库的形式）
+     
+#### 第二种（非常不建议！！！）
+**助手模式**
+使用cherry知识库，将项目目录导入，但是要自行接入嵌入模型对应api，较为繁琐。
+而且该项目采用按需全加载策略，这种方式会损失精度，甚至丧失该项目作用。
 
 AI 会自动执行完整工作流：
 1. 📖 读取知识库（人物、设定、文风规则）
@@ -107,17 +77,51 @@ AI 会自动执行完整工作流：
 
 > **首次使用提示**：如果知识库为空，AI 会引导你先完成基础设定（主角信息、世界观、文风偏好）。
 
+**详细配置说明** → [Cherry Studio 使用指南](docs/06-Cherry-Studio使用指南.md)
+
 ---
 
-### 4. （可选）导入已有内容
+### 4. 其他使用方式
+
+**方式 A：Claude Code / Cursor / Windsurf**
+
+如果你熟悉命令行和代码编辑器：
+
+```bash
+# 进入项目目录
+cd craft-companion
+
+# 用支持 CLAUDE.md 的工具打开
+claude-code .  # 或 cursor . / windsurf .
+```
+
+在编辑器中输入：`请帮我创作第1章`
+
+**方式 B：CLI 工具（注意！！暂时无法使用）**
+
+需要 Node.js 18.0+ 环境：
+
+```bash
+# 安装依赖
+npm install
+
+# 创建新项目
+node tools/init.js
+
+# 使用 CLI 工具
+node tools/novel-cli.js new-chapter 1
+node tools/novel-cli.js check
+node tools/novel-cli.js archive 1
+```
+
+---
+
+### 5. （可选）导入已有内容
 
 如果你已经写了部分章节，可以导入现有内容：
 
 ```bash
-craft-companion import --project ./我的小说 --file 我的章节.txt
-
-# 或使用简短命令
-cc-import --project ./我的小说 --file 我的章节.txt
+node tools/import.js --project ./我的小说 --file 我的章节.txt
 ```
 
 导入工具会自动分析并提取：
@@ -131,37 +135,20 @@ cc-import --project ./我的小说 --file 我的章节.txt
 
 ---
 
-### 5. 使用 CLI 工具
-
-```bash
-cd 我的小说
-
-# 创建新章节工作文件
-craft-companion new-chapter 2
-
-# 验证知识库完整性
-craft-companion check
-
-# 归档已完成章节
-craft-companion archive 1
-```
-
----
-
 ### 常见问题
 
 **Q: 首次创作时 AI 说知识库为空？**
 A: 正常现象。AI 会引导你先完成基础设定。你也可以手动编辑 `知识库/` 目录下的文件。
 
-**Q: `craft-companion` 命令找不到？**
-A: 确保已全局安装：`npm install -g craft-companion`，或从源码安装：`npm install -g .`
+**Q: Cherry Studio 找不到知识库文件？**
+A: 确保导入了整个 `craft-companion` 目录，或手动将 `知识库/` 目录导入到 Cherry Studio 知识库中。
 
-**Q: Claude Code 不识别 CLAUDE.md？**
-A: 确保使用最新版 Claude Code，或尝试其他支持 CLAUDE.md 的工具（Cursor、Windsurf）。
+**Q: 可以用其他 AI 工具吗？**
+A: 可以。任何支持 CLAUDE.md 或能读取知识库文件的 AI 工具都可以使用（Claude Code、Cursor、Windsurf 等）。
 
 ---
 
-**准备好了吗？** → 开始 [创建你的第一个项目](#2-创建你的第一个项目)
+**准备好了吗？** → 查看 [Cherry Studio 完整使用指南](docs/06-Cherry-Studio使用指南.md)
 
 ## 项目结构
 
@@ -185,7 +172,7 @@ Craft Companion/               # 框架根目录
 ## 工作流程
 
 ### 1. 章纲发散
-AI 读取知识库后，生成3个不同侧重点的章纲版本：
+AI 读取知识库后，生成3个不同侧重点的章纲版本，例：
 
 ```markdown
 ## 版本A：【情感线推进】
@@ -218,23 +205,24 @@ AI 自动对照错题集和文风规则，修正常见问题：
 
 ### 知识库 = AI 的长期记忆
 
-AI 本身没有记忆，每次对话都是全新开始。NovelForge 通过结构化知识库解决这个问题：
+AI 本身没有记忆，每次对话都是全新开始。 Craft Companion通过结构化知识库解决这个问题：
 
-- **分层加载**：AI 只读取当前需要的文件，避免 token 浪费
+- **渐进式披露 分层加载**：AI 只读取当前需要的文件，避免 token 浪费
 - **唯一真相源**：所有设定、人物、进展都在知识库中，不会出现"AI 记错了"的情况
 - **持续更新**：每完成一章，知识库自动更新，保持同步
 
 ### 错题集 = AI 的自我纠正
 
-每次你修改 AI 的输出，都是一次"纠错"。NovelForge 把这些纠错记录下来：
+每次你修改 AI 的输出，都是一次"纠错"。NovelForge 把这些纠错记录下来，例：
 
 ```markdown
-## AI-001：避免"他知道"式心理总结
-
-❌ 错误示例：他知道这件事不简单。
-✅ 正确示例：他盯着那封信，眉头皱了起来。
-
-触发场景：心理描写
+## AI-006：AI味过重的抽象表达
+【问题类型】：文风偏离/AI感
+【出现章节】：第xx章初稿
+【具体描述】：小明分析小王时写了"那不是威胁，是划线"。这种抽象化的二元对立表达带有明显AI味道，且"××"一词用于形容某人面对××的态度不恰当。
+【原因分析】：AI倾向使用精炼的、概括性的判断句来总结人物行为，形成一种"万物皆可归纳"的AI感。对人物关系的权力语境考虑不足。
+【解决方案】：改为具体的、基于小明观察视角的描述："在XX局干了二十三年的人，对流程和规矩摸得比谁都清。他那句话不多，但意思很明确，我儿子会配合，但别越线。"
+【经验总结】：避免用抽象化的总结句（"这不是X，是Y"格式）来概括人物行为。应从观察者视角出发，用具体细节和合理推断来展现对另一个人的判断。同时注意权力语境——公民与执法者之间的互动措辞要得体。
 ```
 
 下次 AI 写作时，会自动对照错题集，避免重复错误。
