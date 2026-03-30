@@ -1,8 +1,8 @@
-# NovelForge
+# Craft Companion
 
 **AI 协作创作框架 — 让 AI 真正理解你的作品**
 
-NovelForge 是一个基于结构化知识库的 AI 协作创作框架，专为长篇小说创作设计。通过系统化的知识管理和工作流，让 AI 能够保持角色一致性、遵循世界观设定、延续文风特征，真正成为你的创作伙伴。
+Craft Companion 是一个基于结构化知识库的 AI 协作创作框架，专为长篇小说创作设计。通过系统化的知识管理和工作流，让 AI 能够保持角色一致性、遵循世界观设定、延续文风特征，真正成为你的创作伙伴。
 
 ## 核心特性
 
@@ -49,8 +49,8 @@ cc-init
 
 ```bash
 # 克隆仓库
-git clone https://github.com/qcx1919788736-collab/NovelForge.git
-cd NovelForge
+git clone https://github.com/qcx1919788736-collab/craft-companion.git
+cd craft-companion
 npm install -g .
 ```
 
@@ -166,7 +166,7 @@ A: 确保使用最新版 Claude Code，或尝试其他支持 CLAUDE.md 的工具
 ## 项目结构
 
 ```
-NovelForge/                    # 框架根目录
+Craft Companion/               # 框架根目录
 ├── tools/                     # CLI 工具（init、import、novel-cli）
 ├── novel-knowledge-mcp-server/# MCP 服务器
 ├── docs/                      # 文档
@@ -253,14 +253,14 @@ AI 本身没有记忆，每次对话都是全新开始。NovelForge 通过结构
 
 ### MCP 服务器
 
-NovelForge 提供 MCP（Model Context Protocol）服务器，可在 Claude Desktop 中使用：
+Craft Companion 提供 MCP（Model Context Protocol）服务器，可在 Claude Desktop 中使用：
 
 ```json
 {
   "mcpServers": {
     "novel-knowledge": {
       "command": "node",
-      "args": ["path/to/NovelForge/novel-knowledge-mcp-server/build/index.js"],
+      "args": ["path/to/craft-companion/novel-knowledge-mcp-server/build/index.js"],
       "env": {
         "KNOWLEDGE_BASE_PATH": "path/to/你的项目/知识库"
       }
@@ -271,27 +271,29 @@ NovelForge 提供 MCP（Model Context Protocol）服务器，可在 Claude Deskt
 
 ### CLI 工具
 
-在 NovelForge 根目录下使用：
-
-```bash
-# 创建新章节工作文件
-node tools/novel-cli.js new-chapter 5
-
-# 归档已完成章节
-node tools/novel-cli.js archive 5
-
-# 验证知识库完整性
-node tools/novel-cli.js check
-
-# 更新知识库
-node tools/novel-cli.js update-kb 5
-```
-
-在项目目录内使用（需要引用上级目录）：
+使用全局命令（推荐）：
 
 ```bash
 cd 我的小说
-node ../tools/novel-cli.js new-chapter 5
+
+# 创建新章节工作文件
+craft-companion new-chapter 5
+
+# 归档已完成章节
+craft-companion archive 5
+
+# 验证知识库完整性
+craft-companion check
+
+# 更新知识库
+craft-companion update-kb 5
+```
+
+或从源码目录使用：
+
+```bash
+# 在 Craft Companion 根目录
+node tools/novel-cli.js new-chapter 5
 ```
 
 ## 文档
@@ -305,7 +307,7 @@ node ../tools/novel-cli.js new-chapter 5
 
 ## 适用场景
 
-NovelForge 特别适合：
+Craft Companion 特别适合：
 
 - **长篇小说创作** — 需要管理复杂人物关系和多条故事线
 - **系列作品** — 需要保持世界观一致性
