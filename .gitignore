@@ -33,3 +33,6 @@ desktop.ini
 .env
 .env.local
 .env.*.local
+
+# OpenClaw 个人配置
+.claude/
