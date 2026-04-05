@@ -1,19 +1,17 @@
 # 依赖
 node_modules/
 
-# 数据库
-data/
-*.db
-*.sqlite
-*.sqlite3
+# 用户的实际知识库内容（只保留template）
+知识库/
+工作区/
+_归档/
 
-# 日志
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# 知识库备份和更新日志
+.kb-backups/
+.kb-update-logs/
 
-# 编辑器
+# 编辑器配置
+.obsidian/
 .vscode/
 .idea/
 *.swp
@@ -25,15 +23,19 @@ yarn-error.log*
 Thumbs.db
 desktop.ini
 
-# Claude Code
-.claude/
-
-# 临时文件
-*.tmp
-*.temp
-.cache/
-
 # 环境变量
 .env
 .env.local
-.env.*.local
+
+# 日志
+*.log
+npm-debug.log*
+
+# 构建产物
+dist/
+build/
+
+# 临时文件
+*.tmp
+*.bak
+.cache/
