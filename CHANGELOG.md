@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-04-06
+
+### Fixed
+
+- 首轮交互增加明确分流：优先区分“从零开始”与“导入已有小说”，不再一上来泛泛介绍能力
+- `tools/init.js` 增加模式选择与 `START_HERE.md` 生成，创建项目后下一步更明确
+- `tools/import-cli.js` 路径修正到新版 `提示模板/导入已有小说/...`
+- `tools/novel-cli.js` 对外口径统一为 Craft Companion / 5 阶段
+- 修正文档与模板中的旧路径、旧命名、旧工作流残留
+
+### Changed
+
+- README 改为双入口首页：从零开始 / 导入已有小说
+- 快速开始、导入指南、工作流详解、Cherry Studio 指南统一到当前结构
+- 删除重复的 Cherry Studio 指南文件，减少文档分叉
+- `package.json` 版本更新为 `1.1.1`
+- `LICENSE` 署名统一为 Craft Companion Contributors
+
 ## [1.1.0] - 2026-04-05
 
 ### Added
