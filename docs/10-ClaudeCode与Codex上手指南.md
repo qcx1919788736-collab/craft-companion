@@ -15,6 +15,7 @@
 
 ```bash
 craft-companion bootstrap-entry
+craft-companion doctor
 ```
 
 ## 首轮对话模板（直接可用）

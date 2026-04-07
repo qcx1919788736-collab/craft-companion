@@ -8,13 +8,26 @@
 
 结构化知识库 ✦ 双入口初始化 ✦ 5 阶段工作流
 
-![Version](https://img.shields.io/badge/version-1.1.1-8b5cf6?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.2.0-8b5cf6?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-14b8a6?style=flat-square)
 ![Local First](https://img.shields.io/badge/local--first-yes-f97316?style=flat-square)
 ![Dual Entry](https://img.shields.io/badge/onboarding-dual--entry-ec4899?style=flat-square)
 ![Workflow](https://img.shields.io/badge/workflow-5--stage-3b82f6?style=flat-square)
 
 </div>
+
+---
+
+## 最新更新（v1.2.0）
+
+- 统一 AI 入口：新增 `AI入口_统一指令.md`
+- 旧项目一键升级：`craft-companion bootstrap-entry`
+- 一键健康检查：`craft-companion doctor`
+- 双层质量保障：执行层自查 + 评估层复核
+- 连接异常排查：覆盖 `tls: bad record MAC`
+
+查看完整发布说明：
+- `docs/releases/v1.2.0.md`
 
 ---
 
@@ -156,7 +169,12 @@ craft-companion --help
 
 # 给已有项目补齐统一入口（不动正文）
 craft-companion bootstrap-entry
+
+# 健康检查（入口/模板/接力/检查点）
+craft-companion doctor
 ```
+
+`bootstrap-entry` 会补齐入口与基础骨架（`CLAUDE.md`、`提示模板/`、`docs/`、核心上下文基础文件），不会改你的正文章节文件。
 
 ---
 
@@ -235,6 +253,9 @@ Craft Companion/
 - `docs/09-评估层与复核机制.md`
 - `docs/10-ClaudeCode与Codex上手指南.md`
 - `docs/11-连接错误排查.md`
+- `docs/12-发布与更新展示规范.md`
+- `docs/13-体验验收与一致性检查清单.md`
+- `docs/releases/v1.2.0.md`
 
 ---
 

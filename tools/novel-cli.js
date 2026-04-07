@@ -12,6 +12,7 @@ const WORK_DIR = path.join(process.cwd(), '工作区');
 const ARCHIVE_DIR = path.join(process.cwd(), '_归档', '已完成章节');
 const KB_DIR = path.join(process.cwd(), '知识库');
 const CORE_DIR = path.join(KB_DIR, '00_核心上下文');
+const SCAFFOLD_ROOT = path.join(__dirname, '..');
 
 const colors = {
   reset: '\x1b[0m',
@@ -103,6 +104,11 @@ function check() {
 function bootstrapEntry() {
   log('\n补齐统一入口文件...\n', 'cyan');
 
+  // 为旧项目补齐基础模板和指引文件
+  ensureFromScaffold('提示模板', true);
+  ensureFromScaffold('docs', true);
+  ensureClaudeTemplate();
+
   const filesToEnsure = [
     {
       file: 'START_HERE.md',
@@ -123,6 +129,10 @@ function bootstrapEntry() {
     {
       file: path.join('知识库', '00_核心上下文', '伏笔追踪表_完整版.md'),
       content: '# 伏笔追踪表\n\n| 伏笔 | 状态 | 埋设章节 | 预计收束 |\n|---|---|---|---|\n| （待补充） | 已埋 | - | - |\n'
+    },
+    {
+      file: path.join('知识库', '04_写作参考', '错题集_完整版.md'),
+      content: '# 错题集\n\n暂无内容。\n'
     }
   ];
 
@@ -163,6 +173,99 @@ function bootstrapEntry() {
   log('建议下一步：让 AI 先读取 START_HERE.md 与 AI入口_统一指令.md。', 'cyan');
 }
 
+function ensureFromScaffold(relativePath, recursive = false) {
+  const source = path.join(SCAFFOLD_ROOT, relativePath);
+  const target = path.join(process.cwd(), relativePath);
+  if (fs.existsSync(target) || !fs.existsSync(source)) return;
+
+  if (recursive) {
+    fs.cpSync(source, target, { recursive: true });
+    log(`  + 补齐 ${relativePath}/`, 'green');
+    return;
+  }
+
+  fs.copyFileSync(source, target);
+  log(`  + 补齐 ${relativePath}`, 'green');
+}
+
+function ensureClaudeTemplate() {
+  const target = path.join(process.cwd(), 'CLAUDE.md');
+  if (fs.existsSync(target)) return;
+
+  const source = path.join(SCAFFOLD_ROOT, 'CLAUDE.md');
+  if (!fs.existsSync(source)) return;
+
+  const projectName = path.basename(process.cwd());
+  const content = fs.readFileSync(source, 'utf-8').replace(/\{\{project_name\}\}/g, projectName);
+  fs.writeFileSync(target, content, 'utf-8');
+  log('  + 补齐 CLAUDE.md', 'green');
+}
+
+function doctor() {
+  log('\n运行项目健康检查（doctor）...\n', 'cyan');
+
+  const checks = [
+    { label: 'CLAUDE.md', path: 'CLAUDE.md', required: true },
+    { label: 'START_HERE.md', path: 'START_HERE.md', required: true },
+    { label: 'AI入口_统一指令.md', path: 'AI入口_统一指令.md', required: true },
+    { label: '提示模板/从零开始', path: path.join('提示模板', '从零开始'), required: true },
+    { label: '提示模板/导入已有小说', path: path.join('提示模板', '导入已有小说'), required: true },
+    { label: '提示模板/通用流程', path: path.join('提示模板', '通用流程'), required: true },
+    { label: '知识库/00_核心上下文/当前状态.md', path: path.join('知识库', '00_核心上下文', '当前状态.md'), required: true },
+    { label: '知识库/04_写作参考/错题集_完整版.md', path: path.join('知识库', '04_写作参考', '错题集_完整版.md'), required: true },
+    { label: '工作区', path: '工作区', required: true },
+    { label: '工作区/检查点', path: path.join('工作区', '检查点'), required: true }
+  ];
+
+  let passed = 0;
+  let failed = 0;
+
+  checks.forEach((item) => {
+    const fullPath = path.join(process.cwd(), item.path);
+    const exists = fs.existsSync(fullPath);
+    if (exists) {
+      log(`  [OK] ${item.label}`, 'green');
+      passed++;
+    } else {
+      log(`  [缺失] ${item.label}`, item.required ? 'red' : 'yellow');
+      failed += item.required ? 1 : 0;
+    }
+  });
+
+  const startHerePath = path.join(process.cwd(), 'START_HERE.md');
+  if (fs.existsSync(startHerePath)) {
+    const content = fs.readFileSync(startHerePath, 'utf-8');
+    if (content.includes('AI入口_统一指令.md')) {
+      log('  [OK] START_HERE.md 已关联 AI 统一入口', 'green');
+      passed++;
+    } else {
+      log('  [建议] START_HERE.md 尚未关联 AI 统一入口', 'yellow');
+    }
+  }
+
+  const statePath = path.join(process.cwd(), '知识库', '00_核心上下文', '当前状态.md');
+  if (fs.existsSync(statePath)) {
+    const content = fs.readFileSync(statePath, 'utf-8');
+    if (content.includes('进度接力')) {
+      log('  [OK] 当前状态为可接力格式', 'green');
+      passed++;
+    } else {
+      log('  [建议] 当前状态建议升级为“进度接力”格式', 'yellow');
+    }
+  }
+
+  log('\n检查汇总：', 'blue');
+  log(`  通过项: ${passed}`, 'green');
+  if (failed > 0) {
+    log(`  失败项: ${failed}`, 'red');
+    log('\n项目未完全就绪。建议先执行：craft-companion bootstrap-entry', 'yellow');
+    return;
+  }
+
+  log('  失败项: 0', 'green');
+  log('\n项目已满足“可引导、可接力、可检查”的最小运行条件。', 'green');
+}
+
 function updateKb(num) {
   if (!num || isNaN(num)) return log('错误：请提供章节编号', 'red');
   log(`\n第${num}章终版后建议更新：\n`, 'cyan');
@@ -180,7 +283,8 @@ function showHelp() {
   log('  archive <编号>        归档已完成章节', 'green');
   log('  update-kb <编号>      显示知识库更新清单', 'green');
   log('  check                 检查知识库一致性', 'green');
-  log('  bootstrap-entry       补齐统一入口与接力状态文件', 'green');
+  log('  bootstrap-entry       补齐统一入口与基础骨架（不改正文）', 'green');
+  log('  doctor                健康检查（入口/模板/接力/检查点）', 'green');
   log('  help                  显示帮助\n', 'green');
 }
 
@@ -260,6 +364,7 @@ switch (command) {
   case 'update-kb': updateKb(param); break;
   case 'check': check(); break;
   case 'bootstrap-entry': bootstrapEntry(); break;
+  case 'doctor': doctor(); break;
   case 'help': case undefined: showHelp(); break;
   default:
     log(`未知命令：${command}`, 'red');
