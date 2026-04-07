@@ -31,6 +31,26 @@
 
 ---
 
+## 先看这里（最短路径）
+
+如果你只想最快跑通，不想被文档绕晕，直接做这 4 步：
+
+```bash
+git clone https://github.com/qcx1919788736-collab/craft-companion.git
+cd craft-companion
+node tools/init.js
+# 进入你刚创建的项目目录后：
+craft-companion doctor
+```
+
+然后给 AI 发第一句：
+
+```text
+请先读取 CLAUDE.md、START_HERE.md、AI入口_统一指令.md，然后带我完成第一步，不要提前写正文。
+```
+
+---
+
 ## 选择你的起点
 
 ### 从零开始写新小说
@@ -54,24 +74,6 @@
 > **一句话理解**：
 > - 没有正文 → 走 **从零开始**
 > - 已有正文 → 走 **导入已有小说**
-
----
-
-## 30 秒开始
-
-```bash
-git clone https://github.com/qcx1919788736-collab/craft-companion.git
-cd craft-companion
-node tools/init.js
-```
-
-初始化时选择：
-- 从零开始写新小说
-- 导入已有小说
-
-然后按生成的 `START_HERE.md` 往下走。
-
----
 
 ## 工作方式
 
@@ -180,28 +182,45 @@ craft-companion doctor
 
 ## 推荐使用方式
 
-### 方式 A：Cherry Studio / Claude Code / Cursor / Windsurf
-推荐让 AI 先读取：
+### 方式 A（首推）：Codex / Claude Code
+
+这是当前最推荐的协作方式，原因是：
+- 更容易发挥多 Agent 协作能力（尤其是复核、批量检查、并行任务）
+- 更适合执行“执行层 + 评估层”双层流程
+- 命令行闭环更完整，适合持续迭代
+
+建议让 AI 先读取：
 1. `CLAUDE.md`
 2. `START_HERE.md`
-3. 你当前步骤对应的模板文件
+3. `AI入口_统一指令.md`
+4. 你当前步骤对应的模板文件
+
+推荐首条消息：
+
+```text
+请先读取 CLAUDE.md、START_HERE.md、AI入口_统一指令.md，然后带我完成第一步，不要提前写正文。
+```
+
+### 方式 B：Cherry Studio（新手友好）
+
+优势：
+- 可视化界面更直观
+- 新手上手更轻松
+
+边界：
+- 在复杂多 Agent 编排和长链路协作上，通常不如 Codex / Claude Code 可控
+- 更适合轻量创作与流程体验，不一定能发挥“最强协作模式”
 
 如果你用的是 Cherry Studio，可以先看官方文档：
 - [项目简介 | Cherry Studio](https://docs.cherry-ai.com/)
 - `docs/06-Cherry-Studio使用指南.md`
 
-### 方式 B：OpenClaw / 柴油C6 集成
+### 方式 C：OpenClaw / 柴油C6 集成
 接入时，第一轮只需要先帮用户分流：
 - 从零开始写新小说
 - 导入已有小说
 
 分流后再进入具体步骤，不要一上来问很多问题。
-
-### 方式 C：Claude Code / Codex（推荐首条指令）
-
-```text
-请先读取 CLAUDE.md 和 START_HERE.md，然后严格按 START_HERE.md 的第1步带我执行，不要提前写正文。
-```
 
 ---
 
@@ -261,11 +280,12 @@ Craft Companion/
 
 ## 当前建议
 
-如果你是第一次用，**不要直接看所有文档**。先做这三件事：
+如果你是第一次用，**不要直接看所有文档**。先做这四件事：
 
 1. `node tools/init.js`
 2. 打开 `START_HERE.md`
-3. 按你的模式完成第一步模板
+3. 运行 `craft-companion doctor`
+4. 按你的模式完成第一步模板
 
 这样最快，不容易绕晕。
 
@@ -273,4 +293,5 @@ Craft Companion/
 
 ```bash
 craft-companion bootstrap-entry
+craft-companion doctor
 ```

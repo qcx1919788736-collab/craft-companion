@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Changed
 
-- （预留）
+- README 重排信息层级：新增“最短路径”入口，减少重复上手段落，降低新用户认知负担
+- README 推荐方式调整：将 Codex / Claude Code 设为首推（多 Agent 与复杂协作更强），明确 Cherry Studio 的可视化优势与能力边界
 
 ## [1.2.0] - 2026-04-07
 
