@@ -95,6 +95,9 @@ node tools/init.js
 - `CLAUDE.md`
 - 基础知识库目录
 - `START_HERE.md`（告诉你下一步去哪）
+- `提示模板/`（可直接在项目目录里使用）
+- `docs/`（项目内说明文档）
+- `tools/`（项目内可执行脚本）
 
 ### 3. 按你的模式继续
 
@@ -150,6 +153,9 @@ node tools/import-cli.js
 
 # CLI 功能（按当前仓库实际情况使用）
 craft-companion --help
+
+# 给已有项目补齐统一入口（不动正文）
+craft-companion bootstrap-entry
 ```
 
 ---
@@ -173,6 +179,12 @@ craft-companion --help
 
 分流后再进入具体步骤，不要一上来问很多问题。
 
+### 方式 C：Claude Code / Codex（推荐首条指令）
+
+```text
+请先读取 CLAUDE.md 和 START_HERE.md，然后严格按 START_HERE.md 的第1步带我执行，不要提前写正文。
+```
+
 ---
 
 ## 项目结构
@@ -184,11 +196,15 @@ Craft Companion/
 ├── docs/
 ├── 提示模板/
 │   ├── 从零开始/
-│   └── 导入已有小说/
+│   ├── 导入已有小说/
+│   └── 通用流程/
 │
 └── 你的项目/
     ├── CLAUDE.md
     ├── START_HERE.md
+    ├── 提示模板/
+    ├── docs/
+    ├── tools/
     ├── 知识库/
     ├── 工作区/
     └── _归档/
@@ -216,6 +232,9 @@ Craft Companion/
 - `docs/06-Cherry-Studio使用指南.md`
 - `docs/07-架构设计原则.md`
 - `docs/08-检查点机制.md`
+- `docs/09-评估层与复核机制.md`
+- `docs/10-ClaudeCode与Codex上手指南.md`
+- `docs/11-连接错误排查.md`
 
 ---
 
@@ -228,3 +247,9 @@ Craft Companion/
 3. 按你的模式完成第一步模板
 
 这样最快，不容易绕晕。
+
+如果你是导入已有本地项目，建议先运行：
+
+```bash
+craft-companion bootstrap-entry
+```

@@ -26,12 +26,21 @@
    - 工作目录：项目根目录
 3. 保存并重启 Cherry Studio
 
-**可用工具**：
-- `read_knowledge_file` — 读取知识库文件
-- `search_knowledge` — 搜索知识库
-- `list_knowledge_structure` — 列出知识库结构
-- `get_current_status` — 获取当前创作状态
-- `get_character_info` — 获取人物信息
+**可用工具（实际名称）**：
+- `novel_search_knowledge` — 搜索知识库
+- `novel_get_character` — 获取人物档案
+- `novel_list_characters` — 列出人物列表
+- `novel_get_plot_points` — 获取伏笔追踪
+- `novel_get_current_state` — 获取当前创作状态
+- `novel_list_chapter_files` — 列出工作区章节文件
+- `novel_check_consistency` — 一致性检查
+- `novel_recommend_resources` — 根据章纲推荐资料
+- `novel_get_kb_stats` — 获取知识库统计
+- `novel_read_file` — 读取文件
+
+可写工具（按需使用）：
+- `novel_write_file` / `novel_append_to_file` / `novel_update_section`
+- `novel_list_backups`
 
 ## 常见问题
 
@@ -40,6 +49,9 @@ A: 正常现象，首次使用时 AI 会引导你完成基础设定。
 
 **Q: MCP 服务器连接失败？**
 A: 检查 Node.js 是否已安装（`node --version`），以及 MCP 服务器路径是否正确。不配置 MCP 也不影响使用。
+
+**Q: 出现 `local error: tls: bad record MAC`？**
+A: 这通常是连接层抖动，不是项目文件损坏。先重试，再检查网络/代理节点。详见 `docs/11-连接错误排查.md`。
 
 ---
 

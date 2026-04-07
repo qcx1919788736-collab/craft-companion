@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- 新增 `docs/09-评估层与复核机制.md`，定义“执行层 + 评估层”双层质检
+- 新增 `docs/10-ClaudeCode与Codex上手指南.md`，补齐开箱即用上手路径
+- 新增 `docs/11-连接错误排查.md`，覆盖 `tls: bad record MAC` 等连接层问题排查
+- 新增 `提示模板/通用流程/` 目录（首轮分流、双层复核、争议对比、检查点恢复、批量巡检）
+
+### Changed
+
+- `tools/init.js` 初始化后自动复制 `提示模板/`、`docs/`、`tools/` 到项目目录，减少路径断链
+- `tools/init.js` 新增 `AI入口_统一指令.md` 与可接力格式 `当前状态.md` 初始化内容
+- `tools/novel-cli.js` 新增 `bootstrap-entry` 命令，用于给已有项目补齐统一入口文件
+- `CLAUDE.md` 工作流口径统一为“对外5阶段，阶段3内部双层自查”
+- `docs/06-Cherry-Studio使用指南.md` MCP 工具名对齐实际实现（`novel_*`）
+- `docs/08-检查点机制.md` 增加 `evaluation_completed` 可选检查点说明
+
 ## [1.1.1] - 2026-04-06
 
 ### Fixed

@@ -17,7 +17,8 @@ const commands = {
   'new-chapter': path.join(__dirname, '../tools/novel-cli.js'),
   'archive': path.join(__dirname, '../tools/novel-cli.js'),
   'check': path.join(__dirname, '../tools/novel-cli.js'),
-  'update-kb': path.join(__dirname, '../tools/novel-cli.js')
+  'update-kb': path.join(__dirname, '../tools/novel-cli.js'),
+  'bootstrap-entry': path.join(__dirname, '../tools/novel-cli.js')
 };
 
 if (!command || command === '--help' || command === '-h') {
@@ -31,6 +32,7 @@ Craft Companion - AI 协作创作框架
   craft-companion archive <n>       归档已完成章节
   craft-companion check             验证知识库完整性
   craft-companion update-kb <n>     更新知识库
+  craft-companion bootstrap-entry   补齐统一入口与接力状态文件
 
 或使用简短命令:
   cc-init                           创建新项目
